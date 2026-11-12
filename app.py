@@ -35,8 +35,10 @@ def get_engine():
         )
     # Normalize URL
     if db_url.startswith("postgres://"):
-        db_url = db_url.replace("postgres://", "postgresql+psycopg2://", 1)
-    elif "postgresql" not in db_url and "://" not in db_url:
+        db_url = "postgresql://" + db_url[len("postgres://"):]
+    if db_url.startswith("postgresql://"):
+        db_url = "postgresql+psycopg2://" + db_url[len("postgresql://"):]
+    elif "://" not in db_url:
         db_url = "postgresql+psycopg2://" + db_url
     _engine = create_engine(db_url, pool_pre_ping=True, future=True)
     return _engine
