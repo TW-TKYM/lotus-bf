@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+
 # LoTUS-BF
 
 LoTUS-BF（Location-or-Term Unified Search for Brain Functions）可依研究詞彙與 MNI 座標搜尋 Neurosynth 研究，並呈現文獻、座標與 NIfTI 統計圖譜。
