@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { apiUrl } from '../api'
 
 export function Terms ({ onPickTerm }) {
   const [terms, setTerms] = useState([])
@@ -13,7 +14,7 @@ export function Terms ({ onPickTerm }) {
       setLoading(true)
       setErr('')
       try {
-        const res = await fetch('/terms', { signal: ac.signal })
+        const res = await fetch(apiUrl('/terms'), { signal: ac.signal })
         const data = await res.json().catch(() => ({}))
         if (!res.ok) throw new Error(data?.error || `HTTP ${res.status}`)
         if (!alive) return

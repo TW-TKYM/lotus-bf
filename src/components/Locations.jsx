@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { apiUrl } from '../api'
 
 export function Locations ({ query }) {
   const [rows, setRows] = useState([])
@@ -27,10 +28,10 @@ export function Locations ({ query }) {
       setLoading(true)
       setError('')
       try {
-        const url = new URL(`/query/${encodeURIComponent(query)}/locations`, window.location.origin)
+        const url = new URL(apiUrl(`/query/${encodeURIComponent(query)}/locations`), window.location.origin)
         url.searchParams.set('r', String(radius))
         url.searchParams.set('limit', String(limit))
-        const response = await fetch(url.pathname + url.search, { signal: controller.signal })
+        const response = await fetch(url.toString(), { signal: controller.signal })
         const data = await response.json().catch(() => ({}))
         if (!response.ok) throw new Error(data?.error || `HTTP ${response.status}`)
         if (active) setRows(Array.isArray(data?.results) ? data.results : [])

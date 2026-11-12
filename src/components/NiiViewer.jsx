@@ -4,8 +4,9 @@ const X_RIGHT_ON_SCREEN_RIGHT = true;
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import * as nifti from 'nifti-reader-js'
+import { apiUrl } from '../api'
 
-const MNI_BG_URL = 'static/mni_2mm.nii.gz'
+const MNI_BG_URL = `${import.meta.env.BASE_URL}static/mni_2mm.nii.gz`
 
 // Detect MNI152 2mm template dims & spacing (91x109x91, 2mm iso)
 function isStandardMNI2mm(dims, voxelMM) {
@@ -127,12 +128,12 @@ export function NiiViewer({ query }) {
 
   const mapUrl = useMemo(() => {
     if (!query) return ''
-    const u = new URL(`/query/${encodeURIComponent(query)}/nii`, window.location.origin)
+    const u = new URL(apiUrl(`/query/${encodeURIComponent(query)}/nii`), window.location.origin)
     u.searchParams.set('voxel', String(voxel))
     u.searchParams.set('fwhm', String(fwhm))
     u.searchParams.set('kernel', String(kernel))
     u.searchParams.set('r', String(r))
-    return u.pathname + u.search
+    return u.toString()
   }, [query, fwhm])
 
   // helpers: convert between index [0..N-1] and neurosynth-style signed coord centered at mid voxel

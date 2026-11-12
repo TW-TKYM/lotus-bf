@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { apiUrl } from '../api'
 
 export function Studies ({ query }) {
   const [rows, setRows] = useState([])
@@ -25,7 +26,7 @@ export function Studies ({ query }) {
       setLoading(true)
       setError('')
       try {
-        const response = await fetch(`/query/${encodeURIComponent(query)}/studies`, { signal: controller.signal })
+        const response = await fetch(apiUrl(`/query/${encodeURIComponent(query)}/studies`), { signal: controller.signal })
         const data = await response.json().catch(() => ({}))
         if (!response.ok) throw new Error(data?.error || `HTTP ${response.status}`)
         if (active) setRows(Array.isArray(data?.results) ? data.results : [])

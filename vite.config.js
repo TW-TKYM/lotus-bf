@@ -4,7 +4,7 @@ import { fileURLToPath, URL } from 'node:url'
 import process from 'node:process'
 
 export default defineConfig({
-  base: '/lotus-bf/',
+  base: process.env.VITE_BASE || '/',
   plugins: [react()],
   resolve: {
     alias: {

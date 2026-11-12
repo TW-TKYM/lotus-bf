@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 # LoTUS-BF
 
 LoTUS-BF（Location-or-Term Unified Search for Brain Functions）可依研究詞彙與 MNI 座標搜尋 Neurosynth 研究，並呈現文獻、座標與 NIfTI 統計圖譜。
@@ -36,7 +34,7 @@ npm install
 npm run dev
 ```
 
-Vite 預設將 API 請求代理至 `http://127.0.0.1:5000`。若 API 位於其他位置，啟動 Vite 前設定 `LOTUS_API_URL`；例如指向 `ns-nano-master` 部署的主機。LoTUS-BF 所需的 `/terms`、`/query` 與 `/help` 端點仍須由此專案的 Flask API 提供。
+Vite 開發伺服器預設將 API 請求代理至 `http://127.0.0.1:5000`。若本機 Flask API 使用其他連接埠，啟動 Vite 前設定 `LOTUS_API_URL`。LoTUS-BF 所需的 `/terms`、`/query` 與 `/help` 端點須由此專案的 Flask API 提供。
 
 ## 建置
 
@@ -45,7 +43,13 @@ npm run build
 npm run lint
 ```
 
-建置產物位於 `dist/`，目前 Vite base path 設為 `/lotus-bf/`。
+建置產物位於 `dist/`。預設 base path 為 `/`，適用於 Render Static Site；若部署在 `/lotus-bf/` 子路徑，建置前設定 `VITE_BASE=/lotus-bf/`。
+
+## Render 部署
+
+- **Flask Web Service**：Build Command 為 `pip install -r requirements.txt`；Start Command 為 `gunicorn app:app --bind 0.0.0.0:$PORT`。設定 `DB_URL` 為 ns-nano PostgreSQL 連線字串。
+- **Static Site**：Build Command 為 `npm ci && npm run build`；Publish Directory 為 `dist`。設定 `VITE_API_URL` 為 Flask Web Service 的公開網址，例如 `https://your-api.onrender.com`。
+- 資料庫密碼只放在 Render 環境變數，不要提交至 Git。
 
 ## 查詢語法
 
