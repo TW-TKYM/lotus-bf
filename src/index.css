@@ -1,0 +1,17 @@
+#root { min-height: 100vh; }
+
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 3px solid rgba(22, 124, 128, .28);
+  outline-offset: 2px;
+}
+
+.studies th button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  text-align: left;
+}
+.studies th button:hover { color: #0e6469; }
